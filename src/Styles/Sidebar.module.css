@@ -1,0 +1,120 @@
+.sidebar{
+    width: 260px;
+    height: 100vh;
+    background-color: #0b0e14;
+    color: #94a3b8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Robot, sans-serif;
+}
+.brand_header{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #1e293b;
+}
+.brand_icon{
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#38bdf8 0%, #818cf8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+}
+.brand_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand_name {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.brand_subtitle {
+  color: #475569;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+.sidebar_menu{
+    display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+  flex-grow: 1
+}
+.sidebar_items{
+    display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+}
+.sidebar_items:hover{
+    background-color: #1e293b50;
+  color: #f8fafc;
+}
+.sidebar_items:active{
+   background-color: #1a2332;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.user_profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+}
+
+.avator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.user_info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.user_name {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.user_email {
+  color: #64748b;
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
