@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiGrid, FiUsers, FiSettings, FiCreditCard } from 'react-icons/fi';
+import { FiGrid, FiUsers, FiSettings, FiCreditCard, FiMenu, FiX } from 'react-icons/fi';
 import { TbActivity } from 'react-icons/tb';
 
 const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const navItems = [
@@ -14,55 +15,100 @@ const Sidebar = () => {
     { name: 'Settings', path: '/Settings', icon: FiSettings },
   ];
 
+  const closeSidebar = () => setIsOpen(false);
+
   return (
-    <aside className="flex h-screen w-64 flex-col justify-between border-r border-white/[0.07] bg-[#08090c] p-4 text-slate-300 select-none">
-      {/* Brand Header */}
-      <div>
-        <div className="flex items-center gap-3 px-2 py-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
-            <TbActivity size={22} />
+    <>
+      {/* Mobile Top Header (Sleek & Compact) */}
+      <div className="flex items-center justify-between border-b border-white/[0.07] bg-[#08090c] px-4 py-3 text-slate-300 md:hidden">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+            <TbActivity size={18} />
           </div>
-          <div className="flex flex-col">
-            <span className="text-base font-bold text-slate-100 tracking-tight">Meridian</span>
-            <span className="text-xs text-slate-500 font-medium">Dashboard</span>
-          </div>
+          <span className="text-sm font-bold tracking-tight text-slate-100">Meridian</span>
         </div>
-
-        {/* Navigation Menu */}
-        <nav className="mt-6 flex flex-col gap-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-
-            return (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150 ${
-                  isActive
-                    ? 'bg-white/[0.06] text-sky-400 font-semibold'
-                    : 'text-slate-400 hover:bg-white/[0.03] hover:text-slate-200'
-                }`}
-              >
-                <Icon size={18} className={isActive ? 'text-sky-400' : 'text-slate-400'} />
-                <span>{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Navigation Menu"
+          className="rounded-lg border border-white/10 p-1.5 text-slate-300 hover:bg-white/[0.05] focus:outline-none"
+        >
+          {isOpen ? <FiX size={18} /> : <FiMenu size={18} />}
+        </button>
       </div>
 
-      {/* User Profile Section at Bottom */}
-      <div className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.02] p-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border border-white/15 text-xs font-semibold text-sky-400">
-          JM
+      {/* Backdrop for Mobile */}
+      {isOpen && (
+        <div
+          onClick={closeSidebar}
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+        />
+      )}
+
+      {/* Sidebar Navigation - Width decreased to w-56 for mobile drawer */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-56 sm:w-60 md:w-64 flex-col justify-between border-r border-white/[0.07] bg-[#08090c] p-3.5 text-slate-300 select-none transition-transform duration-300 ease-in-out md:static md:translate-x-0 ${
+          isOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Brand Header */}
+        <div>
+          <div className="flex items-center justify-between px-2 py-2">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                <TbActivity size={20} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-slate-100 tracking-tight">Meridian</span>
+                <span className="text-[10px] text-slate-500 font-medium">Dashboard</span>
+              </div>
+            </div>
+
+            {/* Mobile Close Button */}
+            <button
+              onClick={closeSidebar}
+              className="rounded-lg p-1 text-slate-400 hover:bg-white/[0.05] hover:text-slate-200 md:hidden"
+            >
+              <FiX size={18} />
+            </button>
+          </div>
+
+          {/* Navigation Menu */}
+          <nav className="mt-5 flex flex-col gap-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+
+              return (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={closeSidebar}
+                  className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium transition-all duration-150 ${
+                    isActive
+                      ? 'bg-white/[0.06] text-sky-400 font-semibold'
+                      : 'text-slate-400 hover:bg-white/[0.03] hover:text-slate-200'
+                  }`}
+                >
+                  <Icon size={16} className={isActive ? 'text-sky-400' : 'text-slate-400'} />
+                  <span className="truncate">{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-        <div className="flex flex-col overflow-hidden">
-          <span className="truncate text-xs font-semibold text-slate-200">Jordan Mercer</span>
-          <span className="truncate text-[11px] text-slate-500">jordan@meridian.io</span>
+
+        {/* User Profile Section at Bottom */}
+        <div className="flex items-center gap-2.5 rounded-xl border border-white/[0.05] bg-white/[0.02] p-2.5">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border border-white/15 text-[11px] font-semibold text-sky-400">
+            JM
+          </div>
+          <div className="flex flex-col overflow-hidden">
+            <span className="truncate text-xs font-semibold text-slate-200">Jordan Mercer</span>
+            <span className="truncate text-[10px] text-slate-500">jordan@meridian.io</span>
+          </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 };
 
